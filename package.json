@@ -1,8 +1,10 @@
 {
   "name": "express-local-library",
   "version": "0.0.0",
+  
   "engines": {
-    "node": "12.15.0"},
+    "node": "12.15.0"
+  },
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -14,6 +16,7 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "helmet": "^3.21.2",
     "http-errors": "~1.6.3",
     "mongoose": "^5.8.11",
     "morgan": "~1.9.1",
