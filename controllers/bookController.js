@@ -12,6 +12,18 @@ var async = require('async');
 exports.index = function(req, res) { 
     console.log('book controller index'); 
 
+    var mongoose = require('mongoose');
+
+    var mongoDB = 'mongodb+srv://aditiSharma85:Green@pple2020@cluster0-qmzao.azure.mongodb.net/AditiDB?retryWrites=true&w=majority'
+
+
+    mongoose.connect(mongoDB, { useNewUrlParser: true });
+
+    var db = mongoose.connection;
+
+    db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
 
     async.parallel({
         book_count: function(callback) {
@@ -34,12 +46,17 @@ exports.index = function(req, res) {
     });
 };
 
+exports.book_list = function(req, res, next) {
 
-
-// Display list of all books.
-exports.book_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: Book list');
-};
+    Book.find({}, 'title author')
+      .populate('author')
+      .exec(function (err, list_books) {
+        if (err) { return next(err); }
+        //Successful, so render
+        res.render('book_list', { title: 'Book List', book_list: list_books });
+      });
+      
+  };
 
 // Display detail page for a specific book.
 exports.book_detail = function(req, res) {
